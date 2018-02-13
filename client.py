@@ -37,22 +37,10 @@ question = ""
 text = ""
 key = ""
 
-# #adapted from code.sololearn.com
-# alphabet = 'abcdefghijklmnopqrstuvwxyz'
-# def encrypt(n, plaintext):
-#     result  = ''
-#     for l in plaintext:
-#         try:
-#             i = (alphabet.index(l) + n) % 26
-#             result += alphabet[i]
-#         except ValueError:
-#             result += l
-#     return result
-
 #From tweepy tutorial
 class listener(StreamListener):
     def on_status(self, status):
-        print(repr(status))
+        #print(repr(status))
         text = status.text
         user = status.user.screen_name
         question = text.replace(HASHTAG + ' ', "")
@@ -72,17 +60,19 @@ class listener(StreamListener):
         hash_object = hashlib.md5(token)
         print("[Checkpoint] Generated MD5 Checksum: " + hash_object.hexdigest())
 
-        tup = (key, token, hash_object)
+        tup = (key, token, hash_object.hexdigest())
         print("[Checkpoint] Connecting to " + SERVER_IP + " on port " + SERVER_PORT)
         #from stack overflow
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((SERVER_IP, int(SERVER_PORT)))
         payload = pickle.dumps(tup)
-        print("[Checkpoint] Sending data: %s" (tuple,))
+        tempTup = str(tup)
+        print("[Checkpoint] Sending data: " + tempTup)
         s.send(payload)
         info = s.recv(SOCKET_SIZE)
         s.close()
-        print("[Checkpoint] Received data: ", repr(info))
+        tempTup = str(info)
+        print("[Checkpoint] Received data: " + tempTup)
 
         if info[2] == hash_object:
             print("[Checkpoint] Checksum is VALID")
