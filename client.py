@@ -71,13 +71,18 @@ class listener(StreamListener):
         s.send(payload)
         info = s.recv(int(SOCKET_SIZE))
         s.close()
-        tempTup = str(info)
-        print("[Checkpoint] Received data: " + tempTup)
-
-        if info[2] == hash_object:
+        
+        #Loads information
+        tempTup = pickle.loads(info)
+        answerEncrypt = tempTup[0]
+        answerCheckSum = tempTup[1]
+        checkHash = hashlib.md5(answerEncrypt)
+        
+        print("[Checkpoint] Received data: " + str(tempTup))
+        if  answerCheckSum == checkHash:
             print("[Checkpoint] Checksum is VALID")
-            decrypt = f.decrypt(info[1])
-            print("[Checkpoint] Decrypt: Using Key %s | Plaintext: %s" (info[0], decrypt))
+            decrypt = f.decrypt(answerEncrypt)
+            print("[Checkpoint] Decrypt: Using Key %s | Plaintext: %s" (answerEncrypt.decode("utf-8"), decrypt.decode("utf-8")))
         else:
             raise Exception("[Checkpoint] Checksum is INVALID")
 
