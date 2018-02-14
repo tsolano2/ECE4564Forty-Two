@@ -67,9 +67,9 @@ class listener(StreamListener):
         s.connect((SERVER_IP, int(SERVER_PORT)))
         payload = pickle.dumps(tup)
         tempTup = str(tup)
-        print("[Checkpoint] Sending data: " + tempTup)
+        print('[Checkpoint] Sending data: ' + tempTup)
         s.send(payload)
-        info = s.recv(SOCKET_SIZE)
+        info = s.recv(int(SOCKET_SIZE))
         s.close()
         tempTup = str(info)
         print("[Checkpoint] Received data: " + tempTup)
@@ -79,7 +79,7 @@ class listener(StreamListener):
             decrypt = f.decrypt(info[1])
             print("[Checkpoint] Decrypt: Using Key %s | Plaintext: %s" (info[0], decrypt))
         else:
-            print("[Checkpoint] Checksum is INVALID")
+            raise Exception("[Checkpoint] Checksum is INVALID")
 
         return True
     def on_error(self, status):
