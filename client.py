@@ -43,8 +43,8 @@ class listener(StreamListener):
         #print(repr(status))
         text = status.text
         user = status.user.screen_name
-        question = text.replace(HASHTAG + ' ', "")
-        print("[Checkpoint] New Tweet: " + text + " | User: " + user)
+        question = text.replace(HASHTAG, "")
+        print("[Checkpoint] New Tweet: " + question + " | User: " + user)
 
         # Used from cryptography.io
         key = Fernet.generate_key()
@@ -73,16 +73,18 @@ class listener(StreamListener):
         s.close()
         
         #Loads information
-        tempTup = pickle.loads(info)
-        answerEncrypt = tempTup[0]
-        answerCheckSum = tempTup[1]
+        (answerEncrypt, answerCheckSum ) = pickle.loads(info)
+        #answerEncrypt = tempTup[0]
+        #answerCheckSum = tempTup[1]
         checkHash = hashlib.md5(answerEncrypt)
         
         print("[Checkpoint] Received data: " + str(tempTup))
+        checkHash = checkHash.hexdigest();
+        answerCheckSum = str(answerCheckSum);
         if  answerCheckSum == checkHash:
             print("[Checkpoint] Checksum is VALID")
             decrypt = f.decrypt(answerEncrypt)
-            print("[Checkpoint] Decrypt: Using Key %s | Plaintext: %s" (answerEncrypt.decode("utf-8"), decrypt.decode("utf-8")))
+            print("[Checkpoint] Decrypt: Using Key " + answerEncrypt.decode("utf-8") + " | Plaintext: " + decrypt.decode("utf-8"))            
         else:
             raise Exception("[Checkpoint] Checksum is INVALID")
 
