@@ -77,18 +77,19 @@ while 1:
         print('[Checkpoint] Sending question to Wolfram Alpha: '+plainQuestion.decode("utf-8"))
         plainAnswer = wolframClient.query(plainQuestion)
         try: 
-            plainAnswer = next(plainAnswer.results).text
-            print('[Checkpoint] Answer from wolfram alpha: '+plainAnswer)
+            plainResult = next(plainAnswer.results).text
+            print('[Checkpoint] Answer from wolfram alpha: '+plainResult)
         except StopIteration:
             print('No Results found :/')
-        plainAnswer = plainAnswer.encode()
-        encryptedAnswer = f.encrypt(plainAnswer)
-        checkHash = hashlib.md5(encryptedAnswer)
-        print('[Checkpoint] Encrypt: Generate key: '+key+' | Ciphertext: '+encryptedAnswer)
+        plainResult = plainResult.encode()
+        encryptedAnswer = f.encrypt(plainResult)
+        checkHash = hashlib.md5(encryptedAnswer).hexdigest()
+        print('[Checkpoint] Encrypt: Generate key: '+key+' | Ciphertext: '+str(encryptedAnswer))
         print('[Checkpoint] MD5 Checksum: '+checkHash)
         payload = (encryptedAnswer, checkHash)
-        pickle.dumps(payload)
-        s.close()
+        payload = pickle.dumps(payload)
+        client.send(payload)
+        client.close()
     else:
         print('[Checkpoint] Checksum is INVALID')
     
