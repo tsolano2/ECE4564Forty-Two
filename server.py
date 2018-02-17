@@ -1,3 +1,22 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Team Memberes: Teriencio Solano II, Angel Isidanso, Marcello Balboa
+Team 16
+Professor: William Plymale
+Due Date: 2/18/18
+Description: This is a program to configure the 2nd Raspberry Pi
+as a TCP server, that accepts pickled requests from the client Pi,
+processes the key, question, and md5 checksum, passes the decrypted
+question through a WolframAlpha API query and sends the encrypted
+result and md5 checksum of the result back to the client. Pi. 
+Honor Code: I have neither given nor recieved unathorized assistance
+on this assignment.
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+
+
 import argparse
 import socket
 from cryptography.fernet import Fernet
@@ -37,11 +56,11 @@ while 1:
     
     client, address = s.accept()
     addressString = list(address)
-    print('[Checkpoint]: Accepted client connection from '+addressString[0]+' at port '+str(serverPort))
+    print('[Checkpoint] Accepted client connection from '+addressString[0]+' at port '+str(serverPort))
     
     data = client.recv(serverSize)
     stringData = str(data)
-    print('[Checkpoint]: Received: '+stringData)
+    print('[Checkpoint] Received: '+stringData)
     
     (key, encryptedQuestion, md5Hash) = pickle.loads(data)
     
@@ -55,8 +74,6 @@ while 1:
     md5Hash = str(md5Hash)
     checkHash = hashlib.md5(encryptedQuestion)
    
-    print('CheckHash type: ')
-    print(type(checkHash))
 
     checkHash = checkHash.hexdigest()
     encryptedQuestion = encryptedQuestion.decode("utf-8")
