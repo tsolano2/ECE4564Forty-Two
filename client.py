@@ -1,3 +1,4 @@
+from gtts import gTTS
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
@@ -8,6 +9,7 @@ import sys
 import json
 import hashlib
 import ipaddress
+import os
 
 SERVER_IP = ""
 SERVER_PORT = ""
@@ -83,6 +85,9 @@ class listener(StreamListener):
             print("[Checkpoint] Decrypt: Using Key " + answerEncrypt.decode("utf-8") + " | Plaintext: " + decrypt.decode("utf-8"))            
             print("[Checkpoint] Speaking: " + decrypt.decode("utf-8"));
             #insert text to speech here
+            tts = gTTS(text= decrypt.decode("utf-8"), lang='en')
+            tts.save("temp.mp3")
+            os.system("omxplayer temp.mp3")
         else:
             raise Exception("[Checkpoint] Checksum is INVALID") #catches error if the checksum is invalid
 
