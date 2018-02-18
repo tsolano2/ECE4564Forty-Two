@@ -23,7 +23,7 @@ APIs/Libraries used:
 	wolframalpha (WolframAlpha Python API)
 	gtts (Google Text To Speech Python API)
 	hashlib (library to perform md5 cryptographic hash)
-	Cryptography (libray that used Fernet to derive a key for symmetric encryption)
+	Cryptography(Fernet) (libray that used Fernet to derive a key for symmetric encryption)
 	sys (library that interfaced Python script with the physical Raspberry Pi system)
 	pickle (library to serialize data between a client and server)
-
+        socket (library used to send packets over the connection)
