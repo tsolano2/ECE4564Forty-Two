@@ -26,5 +26,5 @@ APIs/Libraries used:
 	Cryptography(Fernet) (libray that used Fernet to derive a key for symmetric encryption)
 	sys (library that interfaced Python script with the physical Raspberry Pi system)
 	pickle (library to serialize data between a client and server)
-        socket (library used to send packets over the connection)
+        socket (library used to create a connection between the client and the server in order to send information)
 	os module (provides a way for using the operating system dependent functionality)
