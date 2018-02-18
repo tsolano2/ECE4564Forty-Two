@@ -16,7 +16,7 @@ on this assignment.
 
 
 
-
+from gtts import gTTS
 import argparse
 import socket
 from cryptography.fernet import Fernet
@@ -25,6 +25,7 @@ import sys
 import serverKeys
 import wolframalpha
 import pickle
+import os
 from serverKeys import*
 
 
@@ -89,8 +90,11 @@ while 1:
         plainQuestion = f.decrypt(encryptedQuestion.encode())
         print('[Checkpoint] Checksum is VALID')
         print('[Checkpoint] Decrypt using key '+key+' | plaintext = '+plainQuestion.decode("utf-8"))
-        print('[Checkpoint] Speaking Question: '+plainQuestion.decode("utf-8"))
+        print('[Checkpoint] Speaking Question: '+ plainQuestion.decode("utf-8"))
         #speak through GTTS
+        tts = gTTS(text = plainQuestion.decode("utf-8"), lang='en')
+        tts.save("temp.mp3")
+        os.system("omxplayer temp.mp3")
         print('[Checkpoint] Sending question to Wolfram Alpha: '+plainQuestion.decode("utf-8"))
         plainAnswer = wolframClient.query(plainQuestion)
         try: 
