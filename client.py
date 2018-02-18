@@ -39,18 +39,10 @@ key = ""
 
 #From tweepy tutorial 
 class listener(StreamListener):
-<<<<<<< HEAD
     def on_status(self, status): 
         text = status.text  #gets the tweet from twitter
         user = status.user.screen_name  #gets the screen name
         question = text.replace(HASHTAG, "") 
-=======
-    def on_status(self, status):
-        #print(repr(status))
-        text = status.text
-        user = status.user.screen_name
-        question = text.replace(HASHTAG, "")
->>>>>>> 421e8b56d4225254b5e7995cefbe00c2b09e5cac
         print("[Checkpoint] New Tweet: " + question + " | User: " + user)
 
         # Used from cryptography.io
@@ -80,11 +72,6 @@ class listener(StreamListener):
         
         #Loads information
         (answerEncrypt, answerCheckSum ) = pickle.loads(info)
-<<<<<<< HEAD
-=======
-        #answerEncrypt = tempTup[0]
-        #answerCheckSum = tempTup[1]
->>>>>>> 421e8b56d4225254b5e7995cefbe00c2b09e5cac
         checkHash = hashlib.md5(answerEncrypt)
         
         print("[Checkpoint] Received data: " + str(tempTup))
@@ -94,6 +81,8 @@ class listener(StreamListener):
             print("[Checkpoint] Checksum is VALID")
             decrypt = f.decrypt(answerEncrypt)
             print("[Checkpoint] Decrypt: Using Key " + answerEncrypt.decode("utf-8") + " | Plaintext: " + decrypt.decode("utf-8"))            
+            print("[Checkpoint] Speaking: " + decrypt.decode("utf-8"));
+            #insert text to speech here
         else:
             raise Exception("[Checkpoint] Checksum is INVALID") #catches error if the checksum is invalid
 
