@@ -27,3 +27,4 @@ APIs/Libraries used:
 	sys (library that interfaced Python script with the physical Raspberry Pi system)
 	pickle (library to serialize data between a client and server)
         socket (library used to send packets over the connection)
+	os module (provides a way for using the operating system dependent functionality)
