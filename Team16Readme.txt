@@ -17,9 +17,13 @@ Members:
 		the server pi effectively spoke the tweeted question, and the client pi effectively spoke the tweeted answer. 
 
 
-API's used: 
+APIs/Libraries used: 
 
 	tweepy (Twitter Python API)
 	wolframalpha (WolframAlpha Python API)
 	gtts (Google Text To Speech Python API)
+	hashlib (library to perform md5 cryptographic hash)
+	Cryptography (libray that used Fernet to derive a key for symmetric encryption)
+	sys (library that interfaced Python script with the physical Raspberry Pi system)
+	pickle (library to serialize data between a client and server)
 
